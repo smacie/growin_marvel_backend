@@ -59,4 +59,30 @@ public class SpringBootServiceClient {
 
 
     }
+
+    public <T> T proxySpringRestCaller(URI uri, Object body, HttpMethod method, Class<T> clazzResponse) {
+
+        System.out.println("proxySpringRestCaller uri: " + uri.toString());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> entity = (body == null ? new HttpEntity<>(headers) : new HttpEntity<>(new Gson().toJson(body), headers));
+
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            HttpEntity<T> response = restTemplate.exchange(
+                    uri,
+                    method,
+                    entity,
+                    clazzResponse);
+            return response.getBody();
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+
+    }
 }
