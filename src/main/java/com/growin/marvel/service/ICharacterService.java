@@ -9,10 +9,10 @@ public interface ICharacterService {
     /**
      * List all characters ids
      */
-    List<Long> getCharacters();
+    List<Integer> getCharacters();
 
     /**
      * Get character details by id
      */
-    CharacterDetail getCharacter(Long id, String language);
+    CharacterDetail getCharacter(int id, String language);
 }

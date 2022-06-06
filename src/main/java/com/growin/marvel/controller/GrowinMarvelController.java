@@ -4,6 +4,7 @@ import com.growin.marvel.model.CharacterDetail;
 import com.growin.marvel.service.impl.CharacterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,17 +36,15 @@ public class GrowinMarvelController {
 
     @ApiOperation(value = "Characters Listing")
     @GetMapping("/characters")
-    public ResponseEntity<List<Long>> getCharacters(){
-        List<Long> characters = new ArrayList<>();
-
-        return ResponseEntity.ok().body(characters);
+    public ResponseEntity<List<Integer>> getCharacters(){
+        return ResponseEntity.ok().body(characterService.getCharacters());
     }
 
     @ApiOperation(value = "Character Details Listing")
-    @GetMapping("/characters/{id}")
-    public ResponseEntity<CharacterDetail> getCharacterDetails(@PathVariable Long id, @RequestParam String language){
-        CharacterDetail characterDetail = new CharacterDetail();
-
-        return ResponseEntity.ok().body(characterDetail);
+    @GetMapping("/characters/{characterId}")
+    public ResponseEntity<CharacterDetail> getCharacterDetails(
+            @ApiParam(value = "characterId", required = true)
+            @PathVariable int characterId, @RequestParam(value = "language", required = false) String language){
+        return ResponseEntity.ok().body(characterService.getCharacter(characterId, language));
     }
 }

@@ -31,6 +31,13 @@ public class Util {
         return baseUrl + methodListCharacters + getMarvelServiceAuthDetailPath();
     }
 
+    public String getMarvelServiceUrlCharacterDetail(int characterId){
+        String baseUrl = env.getProperty("marvel.service.baseurl");
+        String methodCharacterDetail = env.getProperty("marvel.service.method.character.detail");
+
+        return baseUrl + methodCharacterDetail + characterId + getMarvelServiceAuthDetailPath();
+    }
+
     public String getMarvelServiceAuthDetailPath(){
         String ts = env.getProperty("marvel.service.key.ts");
         String publicKey = env.getProperty("marvel.service.key.public");
